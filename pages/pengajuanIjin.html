@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/src/css/app.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="stylesheet" href="./../src/css/bootstrap.css">
+    <link rel="stylesheet" href="./../src/css/app.css">
+
+    <title>Pengajuan Ijin</title>
+</head>
+<body>
+
+    <div w3-include-html="./../material/header.html"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mt-3">PENGAJUAN IJIN</h1>                
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <form action="">
+                    <div class="form-group">
+                        <label for="alasanIjin">Alasan Ijin</label>
+                        <input type="text" class="form-control" id="alasanIjin">
+                    </div>                    
+                    <div class="form-group">
+                        <label for="tanggalMulia">Tanggal Mulai</label>
+                        <input type="text" class="form-control" id="tanggalMulia">
+                    </div>                   
+                    <div class="form-group">
+                        <label for="lamaHari">Lama Hari</label>
+                        <input type="text" class="form-control" id="lamaHari">
+                    </div>       
+                    <div class="form-group">
+                        <label for="penjelasanDetail">Penjelasan Detail</label>
+                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>                    
+                    </div>                                
+                    <a href="home.html">
+                        <button class="btn btn-primary col-lg-12 mb-5">KIRIM</button>                
+                    </a>
+                </form>
+            </div>
+        </div>        
+    </div>
+
+    <div w3-include-html="./../material/footer.html"></div>
+
+</body>
+<!-- w3js -->
+<script src="./../src/js/w3.js"></script>
+<!-- main js -->
+<script src="./../src/js/main.js"></script>
+<!-- sweetalert -->
+<script src="./../src/js/sweetalert.min.js.js"></script>
+
+</html>

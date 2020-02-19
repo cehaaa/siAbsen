@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="./../src/css/bootstrap.css">
+    <link rel="stylesheet" href="./../src/css/app.css">
+
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="container" ">
+
+        <video id="player" autoplay></video>
+
+        <button id="capture-button" style="display: none ;">simpan gambar</button>
+
+    </div>
+
+    <canvas id="output"></canvas>
+
+
+    <button onclick="camera()">open camera</button>
+
+</body>
+
+<script>
+
+    function camera(){
+        const player = document.getElementById("player");
+        const captureButton = document.getElementById("capture-button");
+        const outputCanvas = document.getElementById("output");
+        const context = outputCanvas.getContext("2d");
+
+        captureButton.style = "block";
+
+        navigator.mediaDevices
+        .getUserMedia({video:true})
+        .then((stream)=>{
+            player.srcObject = stream;
+        }).catch(error=>{
+            console.log("error")
+        })
+
+        captureButton.addEventListener('click',function(){
+            const imageHeight = player.offsetHeight;
+            const imageWidth = player.offsetWidth;
+
+            outputCanvas.width = imageWidth;
+            outputCanvas.height = imageHeight;
+
+            context.drawImage(player,0,0,imageWidth,imageHeight);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.setAttribute('download','filename.png');
+
+            outputCanvas.toBlob((blob)=>{
+                downloadLink.setAttribute('href',URL.createObjectURL(blob));
+                downloadLink.click();
+            });
+        });
+    }
+
+</script>
+
+<script src="./../src/js/main.js"></script>
+<!-- sweetalert -->
+<script src="./../src/js/sweetalert.min.js"></script>
+
+</html>
