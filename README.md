@@ -1,3 +1,3 @@
 # siabsen
 
-aplikasi absensi
+aplikasi absensi berbasis PWA
