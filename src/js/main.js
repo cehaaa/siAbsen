@@ -166,11 +166,33 @@ function camera(){
         const downloadLink = document.createElement('a');
         downloadLink.setAttribute('download','filename.png');
 
-        outputCanvas.toBlob((blob)=>{
-            downloadLink.setAttribute('href',URL.createObjectURL(blob));
-            downloadLink.click();
-        });
+        captureButton.style.display="none";
+        player.style.display="none";
+
+        document.getElementById('save').style = "block";
+        document.getElementById('cancle').style = "block";
+
+        document.getElementById('save').addEventListener('click',function(){
+                outputCanvas.toBlob((blob)=>{
+                downloadLink.setAttribute('href',URL.createObjectURL(blob));
+                downloadLink.click();
+            });
+        })
+
+        document.getElementById('cancel').addEventListener('click',function(){
+            return camera();
+        })
+
+        
     });
 }
 
 // end open camera
+
+//change absen pict
+
+function changeAbsenPict(){
+    console.log('test');
+}
+
+//end absen pict
