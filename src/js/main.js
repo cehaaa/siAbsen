@@ -130,9 +130,9 @@ includeHTML();
 // end include tamplate
 
 // link to 
-    function redirect(page){
-        location.href = page;
-    }
+function redirect(page){
+    location.href = page;
+}
 // end link 
 
 // open camera
@@ -148,11 +148,11 @@ function camera(){
 
     navigator.mediaDevices
     .getUserMedia({video:true})
-    .then((stream)=>{
-        player.srcObject = stream;
-    }).catch(error=>{
-        console.log("error")
-    })
+        .then((stream)=>{
+            player.srcObject = stream;
+        }).catch(error=>{
+            console.log("error")
+        })
 
     captureButton.addEventListener('click',function(){
         const imageHeight = player.offsetHeight;
