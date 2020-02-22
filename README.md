@@ -2,7 +2,7 @@
 
 aplikasi absensi berbasis PWA  </br>
 
-how to run the app  </br>
+<b>how to run the app</b>  </br>
 
 1 . install http-server in your device </br>
 2 . use mobile screen in your laptop or pc </br>
