@@ -6,7 +6,7 @@ aplikasi absensi berbasis PWA  </br>
 
 1 . install http-server in your device </br>
 2 . use mobile screen in your laptop or pc </br>
-3 . run http-server in your terminal
+3 . run http-server in your terminal <br>
         -> enter to your project directory <br>
         -> type http-server <br>
      </br> 
