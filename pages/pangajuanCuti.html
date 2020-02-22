@@ -9,27 +9,48 @@
         <hr>
         <div class="row">
             <div class="col-12">
-                <form action="">
+                <form method="POST">
+
                     <div class="form-group">
                         <label for="namaCuti">Nama Cuti</label>
                         <input type="text" class="form-control" id="namaCuti">
-                    </div>                    
+                    </div>         
+
                     <div class="form-group">
                         <label for="LamaCuti">Lama Cuti</label>
                         <input type="number" class="form-control" id="LamaCuti">
                     </div>                   
+                    
                     <div class="form-group">
                         <label for="mulaiCuti">Mulai Cuti</label>
                         <input type="date" class="form-control" id="mulaiCuti">
                     </div>       
+
                     <div class="form-group">
                         <label for="penjelasanDetail">Penjelasan Detail</label>
                         <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>                    
-                    </div>                                
-                    <a href="main.html">
-                        <button class="btn btn-primary col-lg-12 mb-5">KIRIM</button>                
-                    </a>
+                    </div>                                                
+
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary col-12">KRIRM</button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger col-12" onclick="getPage('main.html')">BATAL</button>
+                        </div>
+                    </div>
+
                 </form>
+
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary col-12">KRIRM</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-danger col-12" onclick="getPage('home.html')">BATAL</button>
+                    </div>
+                </div>
+
             </div>
         </div>        
     </div>

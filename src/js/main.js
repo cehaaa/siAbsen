@@ -31,9 +31,7 @@ function reedem(){
     })
 }
 
-function absenMasuk(){
-
-    var offline = window.onoffline;
+function absenMasuk(){    
 
     if(window == offline){
         offlineAlert();
