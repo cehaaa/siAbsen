@@ -169,19 +169,18 @@ function camera(){
         captureButton.style.display="none";
         player.style.display="none";
 
+        //show save and cancle button
         document.getElementById('save').style.display = "block";
         document.getElementById('cancle').style.display = "block";
 
+        // download img file when press button save
         document.getElementById('save').addEventListener('click',function(){
                 outputCanvas.toBlob((blob)=>{
                 downloadLink.setAttribute('href',URL.createObjectURL(blob));
                 downloadLink.click();
             });
         })
-
-        document.getElementById('cancel').addEventListener('click',function(){
-            e
-        })
+    
     });
 }
 
@@ -190,7 +189,8 @@ function camera(){
 //change absen pict
 
 function changeAbsenPict(){
-    console.log('test');
+    //reload page when cancle pict
+    window.location.reload(false);
 }
 
 //end absen pict
