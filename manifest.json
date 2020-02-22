@@ -1,0 +1,20 @@
+{
+    "name": "siAbsen",
+    "short_name": "siAbsen",
+    "start_url": ".",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ccc",
+    "theme_color": "#5FAAE5",
+    "icons": 
+    [
+        {
+        "src": "agenda.png",
+        "sizes": "64x64"
+        },
+        {
+        "src": "agenda144.png",
+        "sizes": "144x144" 
+        }
+    ]
+}

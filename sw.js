@@ -40,11 +40,9 @@ const file = [
     "./pages/register.html",
     "./pages/slipGaji.html",
     "./pages/useVoucher.html",
-    "./pages/login.html",
-    "./pages/camera.html",
+    "./pages/login.html",    
     
     "./material/camera.html",
-
     "./material/footer.html",
     "./material/header.html",    
 

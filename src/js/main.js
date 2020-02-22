@@ -169,8 +169,8 @@ function camera(){
         captureButton.style.display="none";
         player.style.display="none";
 
-        document.getElementById('save').style = "block";
-        document.getElementById('cancle').style = "block";
+        document.getElementById('save').style.display = "block";
+        document.getElementById('cancle').style.display = "block";
 
         document.getElementById('save').addEventListener('click',function(){
                 outputCanvas.toBlob((blob)=>{
@@ -180,10 +180,8 @@ function camera(){
         })
 
         document.getElementById('cancel').addEventListener('click',function(){
-            return camera();
+            e
         })
-
-        
     });
 }
 
