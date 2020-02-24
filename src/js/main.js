@@ -32,10 +32,7 @@ function reedem(){
 }
 
 function absenMasuk(){    
-
-    if(window == offline){
-        offlineAlert();
-    }else{
+    
         Swal.fire({
             icon : "success",
             title : "Anda Berhasil !",
@@ -50,7 +47,7 @@ function absenMasuk(){
                 getPage('cekPoint.html');
             }
         })
-    }
+    
 
 }
 
@@ -172,11 +169,20 @@ function camera(){
         document.getElementById('cancle').style.display = "block";
 
         // download img file when press button save
-        document.getElementById('save').addEventListener('click',function(){
-                outputCanvas.toBlob((blob)=>{
-                downloadLink.setAttribute('href',URL.createObjectURL(blob));
-                downloadLink.click();
-            });
+        document.getElementById('save').addEventListener('click',function(){                
+            Swal.fire({
+                icon : "success",
+                title : "Anda Berhasil !",
+                html:
+                    '<b>Point Anda +10</b> <br> ' +
+                    '<div class="text-muted font-size-small mt-3">Selamat anda sudah berhasil absen buat hari ini , nih bonus buat kamu , semagat ya !</div>',
+                showCloseButton : true,
+                confirmButtonText : "BACK"
+            }).then((result)=>{
+                if (result.value){
+                    redirect('./../../pages/main.html');
+                }
+            })            
         })
     
     });
