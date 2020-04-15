@@ -54,8 +54,10 @@ const file = [
     "./src/js/w3.js",      
     "./src/js/jquery.min.js",      
     "./src/js/bootstrap.min.js",        
-    "./src/js/popper.min.js",     
-    "./src/js/aos.js",
+    "./src/js/popper.min.js",         
+    "./src/js/login.js",
+    "./src/js/register.js",
+
     
     "./sw.js",
     "./manifest.json",

@@ -9,45 +9,38 @@
         <hr>
         <div class="row">
             <div class="col-12">
-                <form method="POST">
+                <form >
 
                     <div class="form-group">
                         <label for="namaCuti">Nama Cuti</label>
-                        <input type="text" class="form-control" id="namaCuti">
+                        <input type="text" class="form-control" id="namaCuti" autocomplete="off">
                     </div>         
 
                     <div class="form-group">
                         <label for="LamaCuti">Lama Cuti</label>
-                        <input type="number" class="form-control" id="LamaCuti">
+                        <input type="number" class="form-control" id="lamaCuti" autocomplete="off">
                     </div>                   
                     
                     <div class="form-group">
                         <label for="mulaiCuti">Mulai Cuti</label>
-                        <input type="date" class="form-control" id="mulaiCuti">
+                        <input type="date" class="form-control" id="mulaiCuti" autocomplete="off">
                     </div>       
 
                     <div class="form-group">
                         <label for="penjelasanDetail">Penjelasan Detail</label>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>                    
+                        <input type="text" class="form-control" id="detail" autocomplete="off">                        
                     </div>                                                
 
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary col-12">KRIRM</button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-danger col-12" onclick="getPage('main.html')">BATAL</button>
-                        </div>
-                    </div>
+                    
 
                 </form>
-
+                
                 <div class="row">
                     <div class="col">
-                        <button class="btn btn-primary col-12">KRIRM</button>
+                        <button class="btn btn-primary col-12" onclick="sendcuti()">KRIRM</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-danger col-12" onclick="getPage('home.html')">BATAL</button>
+                        <button class="btn btn-danger col-12" onclick="getPage('main.html')">BATAL</button>
                     </div>
                 </div>
 

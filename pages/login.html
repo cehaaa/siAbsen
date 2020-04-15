@@ -14,43 +14,31 @@
     <title>Login</title>
 </head>
 <body>
-    
-    <main id="swup" class="transition-fade">
 
-        <div class="container mt-4">
+    <div class="container mt-4">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div>
-                        <img src="./../src/img/undraw_updated_rr85.png" class="img-fluid" data-aos="fade-in" data-aos-duration="2000">
-                    </div>
-                    <div class="mt-4 text-center">
-                        <select class="form-control">
-                            <option>User</option>
-                            <option>Admin</option>
-                        </select>
-                        <input type="email" class="form-control mt-3" placeholder="Email"></input>
-                        <input type="password" class="form-control mt-3" placeholder="Password"></input>
-                        <a href="main.html">
-                            <button class="btn btn-primary mt-3 mb-3 col-lg-4">MASUK</button>   
-                        </a>
-                        
-                        <a href="register.html">belum memiliki akun ? registrasi</a>                              
-                    </div>  
-                </div>                    
-            </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <img src="./../src/img/undraw_updated_rr85.png" class="img-fluid" data-aos="fade-in" data-aos-duration="2000">
+                </div>
+                <div class="mt-4 text-center">
+
+                    <input type="text" id="username" class="form-control mt-3" placeholder="Username" autocomplete="off"></input>
+                    <input type="email" id="email" class="form-control mt-3" placeholder="Email" autocomplete="off"></input>
+                    <input type="password" id="password" class="form-control mt-3" placeholder="Password" autocomplete="off"></input>
+                    
+                    <button class="btn btn-primary mt-3 mb-3 col-lg-4" onclick="login()">MASUK</button>                       
+                    
+                    <a href="register.html">belum memiliki akun ? registrasi</a>                              
+                </div>  
+            </div>                    
         </div>
+    </div>
 
-    </main>
 
 </body>
 
-    
-    <script src="./../src/js/main.js"></script>
-    <script src="./../src/js/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
+    <script src="./../src/js/login.js"></script>
 
 </html>
