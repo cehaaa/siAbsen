@@ -107,8 +107,9 @@ function showIjin(user_id){
         var ls = JSON.parse(localStorage.getItem("userdata"));
         var username = ls.username;
 
-        data.forEach(item => {
-            document.getElementById("switch").innerHTML =
+        data.forEach(item => {                        
+            document.getElementById("switch").innerHTML +=
+            
             `
             <div class="costum-border rounded mt-3">
                 <div class="row">
@@ -116,7 +117,7 @@ function showIjin(user_id){
                         <img src="./../src/img/man.png" class="img-fluid icon-small" id="profileImage"></img>
                     </div>
                     <div class="col-4 mt-2">
-                        <b>${username}</b>                            
+                        <b>${username}</b>
                         <div class="text-muted">${item.alasan_ijin}</div>
                     </div>
                     <div class="col-6 mt-2 text-muted">
@@ -135,7 +136,7 @@ function showCuti(user_id){
         return res.json();
     })
     .then(data=>{
-        var ls = JSON.stringify(localStorage.getItem("userdata"));
+        var ls = JSON.parse(localStorage.getItem("userdata"));
         var username = ls.username;
         data.forEach(item => {
             document.getElementById("cuti").innerHTML +=
@@ -275,11 +276,22 @@ includeHTML();
 
 // link to 
 function redirect(page){
-    location.href = page;
+    
 }
 // end link 
 
+function absenmasuk(page){
+    location.href = page;   
+}
+
+function absenkeluar(page){
+    location.href = page;   
+}
+
+
 // open camera
+
+var myImage = "";
 
 function camera(){
     
@@ -313,29 +325,37 @@ function camera(){
         captureButton.style.display="none";
         player.style.display="none";
 
+        outputCanvas.toBlob((blob)=>{
+
+            myImage = new File([blob], "absen.jpg", {lastModified: new Date()})
+
+            // downloadLink.setAttribute('href',URL.createObjectURL(blob));
+            // downloadLink.click();
+        });
+
         //show save and cancle button
         document.getElementById('save').style.display = "block";
         document.getElementById('cancle').style.display = "block";
 
-        // download img file when press button save
-        document.getElementById('save').addEventListener('click',function(){                
-            Swal.fire({
-                icon : "success",
-                title : "Anda Berhasil !",
-                html:
-                    '<b>Point Anda +10</b> <br> ' +
-                    '<div class="text-muted font-size-small mt-3">Selamat anda sudah berhasil absen buat hari ini , nih bonus buat kamu , semagat ya !</div>',
-                showCloseButton : true,
-                confirmButtonText : "BACK"
-            }).then((result)=>{
-                if (result.value){
-                    redirect('./../../pages/main.html');
-                }
-            })            
-        })
-    
     });
 }
+
+
+// document.getElementById('save').addEventListener('click',function(){                
+        //     Swal.fire({
+        //         icon : "success",
+        //         title : "Anda Berhasil !",
+        //         html:
+        //             '<b>Point Anda +10</b> <br> ' +
+        //             '<div class="text-muted font-size-small mt-3">Selamat anda sudah berhasil absen buat hari ini , nih bonus buat kamu , semagat ya !</div>',
+        //         showCloseButton : true,
+        //         confirmButtonText : "BACK"
+        //     }).then((result)=>{
+        //         if (result.value){
+        //             redirect('./../../pages/main.html');
+        //         }
+        //     })            
+        // })
 
 // end open camera
 
@@ -347,6 +367,44 @@ function changeAbsenPict(){
 }
 
 //end absen pict
+
+//kirim absen
+
+function dataabsen(){
+
+    var form = new FormData();
+
+    var ls = JSON.parse(localStorage.getItem("userdata"));
+
+    var id_user = ls.id_user;
+    var type = "Masuk";
+    var point = 10;
+    var status = "Tepat Waktu";
+    var timestamp = "2020-04-03 13:58:00";
+
+    console.log(status);
+
+    form.set("photo",myImage);
+    form.set("timestamp",timestamp);
+    form.set("id_user",53);
+    form.set("type",type);
+    form.set("point",point);
+    form.set("status",status);
+
+
+    return form;
+}
+
+function sendabsenmasuk(){
+    var ls = JSON.parse(localStorage.getItem("userdata"));
+    var user_id = ls.user_id;
+    fetch("http://localhost:8000/api/absen/"+user_id+"",{
+        method : "post",
+        body : dataabsen()
+    })    
+}
+
+
 
 //register
 
