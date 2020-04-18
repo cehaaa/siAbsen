@@ -14,7 +14,7 @@
 
 <section class="row mt-4">
     <div class="col-6">                                
-        <div class="card text-center" id="absenMasuk" onclick="absenmasuk('/material/camera.html')">                     
+        <div class="card text-center" id="absenMasuk" onclick="absen('/material/camera.html')">                     
             <div class="card-height">            
                 <img src="./../src/img/008-salary.png" class="img-fluid icon"></img>
             </div>
@@ -25,7 +25,7 @@
     </div>
     
     <div class="col-6 text-center">
-        <div class="card text-center" id="absenKeluar" onclick="absenmasuk('/material/camera2.html')">
+        <div class="card text-center" id="absenKeluar" onclick="absen('/material/camera2.html')">
             <div class="card-height">
                 <img src=./../src/img/027-calendar.png class="img-fluid icon" onclick="sendData()"></img>
             </div>            
@@ -46,19 +46,11 @@
                 <b>Tugas Ku</b>                                
             </h5>
             <p class="text-muted font-size-small mt-2">Kethauilah tugas mu hari ini</p>
-            <button class="costum-primary-button btn mt-2" onclick="getPage('cekTugas.html')">
+            <button class="costum-primary-button btn mt-2" onclick="getPageTugas('cekTugas.html')">
                 CEK DETAIL
             </button>                                            
         </div>
     </div>                    
-</section>
-
-<section class="row">
-    <div class="col-lg-12 mt-3">
-        <input type="checkbox" ></input> <label class="text-muted">mengerjakan design WEB</label> <br></br>
-        <input type="checkbox"></input> <label class="text-muted">koneksi dengan FireBase</label> <br></br>
-        <input type="checkbox"></input> <label class="text-muted">mengerjakan mobile design</label>
-    </div>
 </section>
 
 <hr class="mt-4"></hr>

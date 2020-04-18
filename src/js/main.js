@@ -1,67 +1,112 @@
-function getPage(page) {
-    var ajax = new XMLHttpRequest();
+var ls = JSON.parse(localStorage.getItem("userdata"));
+var user_id = ls.user_id;
+var myImage = "";
+
+var tgl = new Date();
+var dd = String(tgl.getDate()).padStart(2, '0');
+var mm = String(tgl.getMonth() + 1).padStart(2, '0'); 
+var yyyy = tgl.getFullYear();
+var todaydate = yyyy+"-"+mm+"-"+dd;
+
+var h = String(tgl.getHours()).padStart(2, '0');
+var m = String(tgl.getMinutes()).padStart(2, '0');
+var s = String(tgl.getSeconds()).padStart(2, '0');
+
+var ajax = new XMLHttpRequest();
+var form = new FormData();
+
+function getPage(page) {    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            document.getElementById("mainPage").innerHTML = ajax.responseText;     
-            test();
+            document.getElementById("mainPage").innerHTML = ajax.responseText;                 
         }                
     }
     ajax.send();
 }
 
-function getGajiPage(page){
-    var ajax = new XMLHttpRequest();
+function getGajiPage(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
             document.getElementById("main").innerHTML = ajax.responseText;     
-            var ls = JSON.parse(localStorage.getItem("userdata"));
-            var user_id = ls.user_id;
             showGaji(user_id);
         }                
     }
     ajax.send();
 }
 
-function getPageCuti(page){
-    var ajax = new XMLHttpRequest();
+function getPageCuti(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
             document.getElementById("switch").innerHTML = ajax.responseText;     
-            var ls = JSON.parse(localStorage.getItem("userdata"));
-            var user_id = ls.user_id;
             showCuti(user_id);
-
             document.getElementById("formbutton").innerHTML = 
             `
-                <button class="btn btn-primary col-12" onclick="getPage('pengajuanCuti.html')">PENGAJUAN CUTI</button>                
+                <button class="btn btn-primary col-12" onclick="getPage('pengajuanCuti.html')" style="margin-bottom:100px">PENGAJUAN CUTI</button>                
             `;
         }                
     }
     ajax.send();
 }
 
-function getPageIjin(page){
-    var ajax = new XMLHttpRequest();
+function getPageIjin(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
             document.getElementById("main").innerHTML = ajax.responseText;     
-            var ls = JSON.parse(localStorage.getItem("userdata"));
-            var user_id = ls.user_id;
             showIjin(user_id);
-
             document.getElementById("formbutton").innerHTML = 
             `
-                <button class="btn btn-primary col-12" onclick="getPage('pengajuanIjin.html')">PENGAJUAN IJIN</button>                
+                <button class="btn btn-primary col-12" onclick="getPage('pengajuanIjin.html')" style="margin-bottom:100px">PENGAJUAN IJIN</button>                
             `;
         }                
     }
     ajax.send();
 }
 
+function getPageTugas(page){    
+    ajax.open("get",page,true);
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            document.getElementById("main").innerHTML = ajax.responseText;     
+            showTugas(user_id);
+        }                
+    }
+    ajax.send();
+}
+
+function showTugas(user_id){
+    fetch("http://localhost:8000/api/tugas/"+user_id+"")
+    .then(res=>{
+        return res.json();
+    })
+    .then(data=>{
+        data.forEach(item => {
+            document.getElementById("tugas").innerHTML +=
+            `
+            <div class="row my-3 ">
+                <div class="col-1 mt-1">
+                    <input type="checkbox"></input>
+                </div>
+                <div class="col-11">
+                    <b>${item.judul}</b>
+                    <div class="text-muted">
+                        ${item.detail}
+                    </div>                    
+                    <div class="text-danger">
+                        Deadline ${item.deadline}
+                    </div>
+                    <div class="text-muted">
+                        Diberikan Tgl ${item.tgl_diberikan_tugas}
+                    </div>                            
+                </div>                                
+            </div>
+            `;            
+        });
+    })
+}
 
 function showGaji(user_id){
     fetch("http://localhost:8000/api/gaji/"+user_id+"")
@@ -69,14 +114,6 @@ function showGaji(user_id){
         return res.json();
     })
     .then(data=>{
-
-        var date = new Date();
-        var dd = date.getDate();
-        var mm = date.getMonth();
-        var yyyy = date.getFullYear();
-
-        var datenow = dd+"-"+mm+"-"+yyyy;
-
         data.forEach(item => {
             document.getElementById("gaji").innerHTML += 
             `
@@ -85,7 +122,7 @@ function showGaji(user_id){
                     <img src="./../src/img/011-salary.png" class="img-fluid icon-small"></img>
                 </div>
                 <div class="col-6 mt-2">
-                    <b>${datenow}</b>
+                    <b>${item.bulan}</b>
                 </div>
                 <div class="col-3 mt-4 text-muted">
                     Rp.${item.subtotal}
@@ -93,7 +130,6 @@ function showGaji(user_id){
             </div>
             `;
         });
-
     })
 }
 
@@ -103,13 +139,9 @@ function showIjin(user_id){
         return res.json();
     })
     .then(data=>{
-
-        var ls = JSON.parse(localStorage.getItem("userdata"));
         var username = ls.username;
-
         data.forEach(item => {                        
-            document.getElementById("switch").innerHTML +=
-            
+            document.getElementById("switch").innerHTML +=        
             `
             <div class="costum-border rounded mt-3">
                 <div class="row">
@@ -136,7 +168,7 @@ function showCuti(user_id){
         return res.json();
     })
     .then(data=>{
-        var ls = JSON.parse(localStorage.getItem("userdata"));
+    
         var username = ls.username;
         data.forEach(item => {
             document.getElementById("cuti").innerHTML +=
@@ -158,11 +190,6 @@ function showCuti(user_id){
     })
 }
 
-function test(){
-    console.log("berhasil")
-}
-
-
 // absen masuk
 
 function reedem(){
@@ -181,59 +208,21 @@ function reedem(){
     })
 }
 
-function absenMasuk(){    
-    
-        Swal.fire({
-            icon : "success",
-            title : "Anda Berhasil !",
-            html:
-                '<b>Point Anda +10</b> <br> ' +
-                '<div class="text-muted font-size-small mt-3">Selamat anda sudah berhasil absen buat hari ini , nih bonus buat kamu , semagat ya !</div>',
-            showCloseButton : true,
-            confirmButtonText : "CEK POINT"
-        }).then((result)=>{
-            if (result.value){
-                // location.href="cekPoint.html";  
-                getPage('cekPoint.html');
-            }
-        })
-    
 
-}
-
-// end absen masuk
-
-// offline
-
-function offlineAlert(){
-    Swal.fire({
-        icon : "error",
-        title : "Anda sedang offline !",
-        html: 
-        "<b>Tidak ada sambungan</b>"+
-        "<div>Silahkan cek sambungan anda untuk melanjutkan</div>",
-    })
-}
-
-// end offline
-
-// ijin terkirim
-
-function ijinTerkirim(){
+function dataterkirim(){
     Swal.fire({
         icon : "success",
-        title : "berhasil mengirim",
-        html : "<div class='text-muted font-size-small mt-3'>semoga lekas sembuh</div>",
+        title : "Data Terkirim",        
         confirmButtonText :"Ok"
     })
+    .then(()=>{
+        location.href = "./../pages/main.html";
+    })    
 }
-
-// end ijin terkirim
 
 // get page
 
-function getPage(page){
-    var ajax = new XMLHttpRequest();    
+function getPage(page){        
     ajax.open("get",page,true);
     ajax.onreadystatechange = function(){
         if(ajax.status == 200 && ajax.readyState==4){
@@ -274,24 +263,11 @@ includeHTML();
 
 // end include tamplate
 
-// link to 
-function redirect(page){
-    
-}
-// end link 
-
-function absenmasuk(page){
+function absen(page){
     location.href = page;   
 }
-
-function absenkeluar(page){
-    location.href = page;   
-}
-
 
 // open camera
-
-var myImage = "";
 
 function camera(){
     
@@ -329,8 +305,6 @@ function camera(){
 
             myImage = new File([blob], "absen.jpg", {lastModified: new Date()})
 
-            // downloadLink.setAttribute('href',URL.createObjectURL(blob));
-            // downloadLink.click();
         });
 
         //show save and cancle button
@@ -339,23 +313,6 @@ function camera(){
 
     });
 }
-
-
-// document.getElementById('save').addEventListener('click',function(){                
-        //     Swal.fire({
-        //         icon : "success",
-        //         title : "Anda Berhasil !",
-        //         html:
-        //             '<b>Point Anda +10</b> <br> ' +
-        //             '<div class="text-muted font-size-small mt-3">Selamat anda sudah berhasil absen buat hari ini , nih bonus buat kamu , semagat ya !</div>',
-        //         showCloseButton : true,
-        //         confirmButtonText : "BACK"
-        //     }).then((result)=>{
-        //         if (result.value){
-        //             redirect('./../../pages/main.html');
-        //         }
-        //     })            
-        // })
 
 // end open camera
 
@@ -370,63 +327,42 @@ function changeAbsenPict(){
 
 //kirim absen
 
-function dataabsen(){
+function dataabsen(type){
+    var status = "";
+    var point;    
+    
+    var id_user = ls.user_id;    
+    var type = type;
+    var timestamp = yyyy+"-"+mm+"-"+dd+" "+ h+":"+m+":"+s ;    
+    var today = todaydate+" "+ "07"+":"+"00"+":"+"00" ;
 
-    var form = new FormData();
-
-    var ls = JSON.parse(localStorage.getItem("userdata"));
-
-    var id_user = ls.id_user;
-    var type = "Masuk";
-    var point = 10;
-    var status = "Tepat Waktu";
-    var timestamp = "2020-04-03 13:58:00";
-
-    console.log(status);
+    if(timestamp == today ){
+        status = "Tepat Waktu";
+        point = 10;
+    }else{
+        status = "Telat";
+        point = 0;
+    }
 
     form.set("photo",myImage);
     form.set("timestamp",timestamp);
-    form.set("id_user",53);
+    form.set("id_user",id_user);
     form.set("type",type);
     form.set("point",point);
     form.set("status",status);
 
-
     return form;
 }
 
-function sendabsenmasuk(){
-    var ls = JSON.parse(localStorage.getItem("userdata"));
-    var user_id = ls.user_id;
+function sendabsen(type){
     fetch("http://localhost:8000/api/absen/"+user_id+"",{
         method : "post",
-        body : dataabsen()
+        body : dataabsen(type)
     })    
-}
-
-
-
-//register
-
-function registerData(){
-    var fd = new FormData();
-    var nama = document.getElementById("nama").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    fd.set("nama",nama);
-    fd.set("email",email);
-    fd.set("password",password);
-    return fd;
+    dataterkirim();
 }
 
 function ijinData(){
-    var tgl = new Date();
-    var dd = String(tgl.getDate()).padStart(2, '0');
-    var mm = String(tgl.getMonth() + 1).padStart(2, '0'); 
-    var yyyy = tgl.getFullYear();
-
-    
-    var ls = JSON.parse(localStorage.getItem("userdata"));    
 
     var alasan = document.getElementById("alasanIjin").value;
     var lamahari = document.getElementById("lamaHari").value;
@@ -445,12 +381,6 @@ function ijinData(){
 }
 
 function cutiData(){
-    var tgl = new Date();
-    var dd = String(tgl.getDate()).padStart(2, '0');
-    var mm = String(tgl.getMonth() + 1).padStart(2, '0'); 
-    var yyyy = tgl.getFullYear();
-
-    var ls = JSON.parse(localStorage.getItem("userdata"));
 
     var namacuti = document.getElementById("namaCuti").value;
     var lamacuti = document.getElementById("lamaCuti").value;
@@ -459,7 +389,6 @@ function cutiData(){
     var tglmulai = tgl = yyyy + '-' + mm + '-' + dd;
     var id_user = ls.user_id;    
 
-    var form = new FormData();
     form.set("nama_cuti",namacuti);
     form.set("lama_cuti",lamacuti);
     form.set("mulai_cuti",mulaicuti);
@@ -472,30 +401,19 @@ function cutiData(){
 
 
 function sendijin(){
-    
-    var ls = JSON.parse(localStorage.getItem("userdata"));    
     var id_user = ls.user_id;    
-
     fetch("http://localhost:8000/api/ijin/"+id_user+"",{
         method : "post",
         body : ijinData(),
     })
-    .then(res=>{
-        return res.json();
-    })
-    .then(data=>{
-        console.log('data anda')
-    })
+    dataterkirim();
 }
 
 function sendcuti(){
-    var ls = JSON.parse(localStorage.getItem("userdata"));    
     var id_user = ls.user_id;    
-
     fetch("http://localhost:8000/api/cuti/"+id_user+"",{
         method : "post",
         body : cutiData(),
     })
-    
-    console.log('data anda sudah dikirim');
+    dataterkirim();
 }
