@@ -11,10 +11,6 @@
         {
         "src": "agenda.png",
         "sizes": "64x64"
-        },
-        {
-        "src": "agenda144.png",
-        "sizes": "144x144" 
-        }
+        }        
     ]
 }

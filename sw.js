@@ -25,7 +25,6 @@ const file = [
     "./src/img/undraw_updated_rr85.png",
     "./src/img/user.png",
 
-
     "./pages/main.html",
     "./pages/akun.html",
     "./pages/cekPoint.html",
@@ -36,13 +35,14 @@ const file = [
     "./pages/ijin.html",
     "./pages/info.html",
     "./pages/pengajuanIjin.html",
-    "./pages/pangajuanCuti.html",
+    "./pages/pengajuanCuti.html",
     "./pages/register.html",
     "./pages/slipGaji.html",
     "./pages/useVoucher.html",
     "./pages/login.html",    
     
     "./material/camera.html",
+    "./material/camera2.html",
     "./material/footer.html",
     "./material/header.html",    
 
@@ -58,7 +58,6 @@ const file = [
     "./src/js/login.js",
     "./src/js/register.js",
 
-    
     "./sw.js",
     "./manifest.json",
 ]
@@ -75,34 +74,35 @@ self.addEventListener('install',function(event){
     );
 })
 
-self.addEventListener('fetch', function(event) {
-    console.log("fetch url : " , event.request.url)
-    event.respondWith(
-        caches.match(event.request)
-        .then(function(response){
-            console.log("found in cache")
-            if(response){
-                return response;
-            }
-            return fetch(event.request)
-            .then(function(response){
-                if(response.status == 404){
-                    return caches.match("404.html");
-                }
+// self.addEventListener('fetch', function(event) {
+//     console.log("fetch url : " , event.request.url)
+//     event.respondWith(
+//         caches.match(event.request)
+//         .then(function(response){
+//             console.log("found in cache")
+//             if(response){
+//                 console.log(response);
+//                 return response;
+//             }
+//             return fetch(event.request)
+//             .then(function(response){
+//                 if(response.status == 404){
+//                     return caches.match("404.html");
+//                 }
 
-                return caches.open(cacheStaticName)
-                .then(function(chace){
-                    cache.put(event.request.url , response.clone());
-                    return response;
-                })
+//                 return caches.open(cacheStaticName)
+//                 .then(function(chace){
+//                     cache.put(event.request.url , response.clone());
+//                     return response;
+//                 })
 
-            })
-            .catch(function(error){
-                return caches.match("offline.html");
-            })
-        })
-    )
-});
+//             })
+//             .catch(function(error){
+//                 return caches.match("offline.html");
+//             })
+//         })
+//     )
+// });
 
 self.addEventListener('activate',function(event){
     const allChace = [cacheStaticName]

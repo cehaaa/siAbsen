@@ -1,41 +1,66 @@
-var ls = JSON.parse(localStorage.getItem("userdata"));
-var user_id = ls.user_id;
-var myImage = "";
+// global variable
 
-var tgl = new Date();
-var dd = String(tgl.getDate()).padStart(2, '0');
-var mm = String(tgl.getMonth() + 1).padStart(2, '0'); 
-var yyyy = tgl.getFullYear();
-var todaydate = yyyy+"-"+mm+"-"+dd;
+    // user id , important
+        var ls = JSON.parse(localStorage.getItem("userdata"));
+        var user_id = ls.user_id;
+    // 
 
-var h = String(tgl.getHours()).padStart(2, '0');
-var m = String(tgl.getMinutes()).padStart(2, '0');
-var s = String(tgl.getSeconds()).padStart(2, '0');
+    // image , important
+        var myImage = "";
+    //
 
-var ajax = new XMLHttpRequest();
-var form = new FormData();
+    // date , important
+        var tgl = new Date();
+        var dd = String(tgl.getDate()).padStart(2, '0');
+        var mm = String(tgl.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = tgl.getFullYear();
+        var todaydate = yyyy+"-"+mm+"-"+dd;
+    //
 
+    // time , important
+        var h = String(tgl.getHours()).padStart(2, '0');
+        var m = String(tgl.getMinutes()).padStart(2, '0');
+        var s = String(tgl.getSeconds()).padStart(2, '0');
+    //
+
+    // objek
+        var ajax = new XMLHttpRequest();
+        var form = new FormData();
+    //
+    
+// end global variabel
+
+// get page 
+// params get when function executed
 function getPage(page) {    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            document.getElementById("mainPage").innerHTML = ajax.responseText;                 
+            document.getElementById("main").innerHTML = ajax.responseText;                 
         }                
     }
     ajax.send();
 }
+//end get page
 
+// get gaji page
+// run showGaji()
+// params get when function executed
 function getGajiPage(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            document.getElementById("main").innerHTML = ajax.responseText;     
+            document.getElementById("main").innerHTML = ajax.responseText;    
             showGaji(user_id);
         }                
     }
     ajax.send();
 }
+// end get gaji page
 
+// get page cuti
+// run showCuti()
+// params get when function executed
 function getPageCuti(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
@@ -50,7 +75,11 @@ function getPageCuti(page){
     }
     ajax.send();
 }
+// end page cuti
 
+// get ijin page
+// run showIjin()
+// params get when function executed
 function getPageIjin(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
@@ -65,7 +94,11 @@ function getPageIjin(page){
     }
     ajax.send();
 }
+// end get ijin page
 
+// get page tugas 
+// run showTugas()
+// params get when function execute
 function getPageTugas(page){    
     ajax.open("get",page,true);
     ajax.onreadystatechange = function () {
@@ -76,40 +109,44 @@ function getPageTugas(page){
     }
     ajax.send();
 }
+// end get page tugas
 
+// show tugas
+// user_id get from getPageTugas
 function showTugas(user_id){
-    fetch("http://localhost:8000/api/tugas/"+user_id+"")
+    fetch("http://localhost:8000/api/tugas/"+user_id)
     .then(res=>{
         return res.json();
     })
-    .then(data=>{
+    .then(data=>{        
         data.forEach(item => {
             document.getElementById("tugas").innerHTML +=
             `
-            <div class="row my-3 ">
-                <div class="col-1 mt-1">
-                    <input type="checkbox"></input>
-                </div>
-                <div class="col-11">
-                    <b>${item.judul}</b>
-                    <div class="text-muted">
-                        ${item.detail}
+            <div class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.judul}</h5>  
+                        <p class="card-text">${item.detail}</p>
+                        <div class="text-danger">tgl diberikan tugas : ${item.tgl_diberikan_tugas}</div>
+                        <div class="text-danger">deadline : ${item.deadline}</div>                                                                        
+                        <div class="mt-3">
+                            <button class="col-lg-12 btn btn-primary" onclick="selesaitugas('${item.id}')">Selesai</button>
+                        </div>
                     </div>                    
-                    <div class="text-danger">
-                        Deadline ${item.deadline}
-                    </div>
-                    <div class="text-muted">
-                        Diberikan Tgl ${item.tgl_diberikan_tugas}
-                    </div>                            
-                </div>                                
-            </div>
+                </div>                                     
+            </div>            
             `;            
         });
     })
 }
+// end show tugas
 
+// show gaji 
+// user_id get from getGajiPage
 function showGaji(user_id){
-    fetch("http://localhost:8000/api/gaji/"+user_id+"")
+    fetch("http://localhost:8000/api/gaji/"+user_id,{
+        method : "get"
+    })
     .then(res=>{
         return res.json();
     })
@@ -132,9 +169,12 @@ function showGaji(user_id){
         });
     })
 }
+// end show gaji
 
+// show ijin 
+// user_id get from getPageIjin
 function showIjin(user_id){
-    fetch("http://localhost:8000/api/ijin/"+user_id+"")
+    fetch("http://localhost:8000/api/ijin/"+user_id)
     .then(res=>{
         return res.json();
     })
@@ -161,9 +201,12 @@ function showIjin(user_id){
         });
     })
 }
+// end show ijin 
 
+//show cuti
+// user_id get from function getPageCuti
 function showCuti(user_id){    
-    fetch("http://localhost:8000/api/cuti/"+user_id+"")
+    fetch("http://localhost:8000/api/cuti/"+user_id)
     .then(res=>{
         return res.json();
     })
@@ -173,25 +216,27 @@ function showCuti(user_id){
         data.forEach(item => {
             document.getElementById("cuti").innerHTML +=
             `
-            <div class="row">
-                <div class="col-2 mt-2">
-                    <img src="./../src/img/man.png" class="img-fluid icon-small"></img>
-                </div>
-                <div class="col-4 mt-2">
-                    <b>${username}</b>                            
-                    <div class="text-muted">Cuti ${item.lama_cuti} hari</div>
-                </div>
-                <div class="col-6 mt-2 text-muted">
-                    <div>${item.mulai_cuti}</div>
-                </div>
+            <div class="costum-border rounded mt-3 col-lg-12">
+                <div class="row">
+                    <div class="col-2 mt-2">
+                        <img src="./../src/img/man.png" class="img-fluid icon-small"></img>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <b>${username}</b>                            
+                        <div class="text-muted">Cuti ${item.lama_cuti} hari</div>
+                    </div>
+                    <div class="col-6 mt-2 text-muted">
+                        <div>${item.mulai_cuti}</div>
+                    </div>
+                </div>                
             </div>    
             `
         });
     })
 }
+// end show cuti
 
-// absen masuk
-
+// alert reedem kupon
 function reedem(){
     Swal.fire({
         icon : "success",
@@ -207,35 +252,23 @@ function reedem(){
         }
     })
 }
+//end reedem
 
-
+// alert data terkirim
 function dataterkirim(){
     Swal.fire({
-        icon : "success",
-        title : "Data Terkirim",        
-        confirmButtonText :"Ok"
+        icon : "success",        
+        title : "Data terkrim"
     })
     .then(()=>{
-        location.href = "./../pages/main.html";
-    })    
+        window.location.href = "./../../pages/main.html";
+    })
+    
 }
-
-// get page
-
-function getPage(page){        
-    ajax.open("get",page,true);
-    ajax.onreadystatechange = function(){
-        if(ajax.status == 200 && ajax.readyState==4){
-            document.getElementById("main").innerHTML = ajax.responseText;
-        }
-    }
-    ajax.send();
-}
-
-// end get page
+//end kirim data
 
 // include tamplate
-
+// using w3 html include
 function includeHTML() {
     var z, i, elmnt, file, xhttp;    
     z = document.getElementsByTagName("*");
@@ -258,17 +291,17 @@ function includeHTML() {
         }
     }
 }
-
 includeHTML();
-
 // end include tamplate
 
+// redirect camera
 function absen(page){
     location.href = page;   
 }
+// end redirect camera
 
 // open camera
-
+// send data absen
 function camera(){
     
     const player = document.getElementById("player");
@@ -302,9 +335,7 @@ function camera(){
         player.style.display="none";
 
         outputCanvas.toBlob((blob)=>{
-
             myImage = new File([blob], "absen.jpg", {lastModified: new Date()})
-
         });
 
         //show save and cancle button
@@ -313,25 +344,20 @@ function camera(){
 
     });
 }
-
 // end open camera
 
 //change absen pict
-
 function changeAbsenPict(){
     //reload page when cancle pict
     window.location.reload(false);
 }
-
 //end absen pict
 
-//kirim absen
-
+//data absen
 function dataabsen(type){
     var status = "";
     var point;    
     
-    var id_user = ls.user_id;    
     var type = type;
     var timestamp = yyyy+"-"+mm+"-"+dd+" "+ h+":"+m+":"+s ;    
     var today = todaydate+" "+ "07"+":"+"00"+":"+"00" ;
@@ -346,74 +372,96 @@ function dataabsen(type){
 
     form.set("photo",myImage);
     form.set("timestamp",timestamp);
-    form.set("id_user",id_user);
+    form.set("id_user",user_id);
     form.set("type",type);
     form.set("point",point);
     form.set("status",status);
 
     return form;
 }
+//end data absen
 
+//kirim absen
+//pgl function dataterkirim()
 function sendabsen(type){
-    fetch("http://localhost:8000/api/absen/"+user_id+"",{
+    fetch("http://localhost:8000/api/absen/"+user_id,{
         method : "post",
         body : dataabsen(type)
     })    
     dataterkirim();
 }
+//end kirim absen
 
+// kirim data ijin 
 function ijinData(){
 
     var alasan = document.getElementById("alasanIjin").value;
     var lamahari = document.getElementById("lamaHari").value;
     var tglmulai = tgl = yyyy + '-' + mm + '-' + dd;
     var detail = document.getElementById("detail").value;
-    var id_user = ls.user_id;    
 
     var form = new FormData()
     form.set("alasan_ijin",alasan);
     form.set("lama_hari",lamahari);
     form.set("tgl_mulai",tglmulai)
     form.set("desc",detail)
-    form.set("id_user",id_user)
+    form.set("id_user",user_id)
 
     return form;
 }
+// end kirim data ijin
 
+// kirim data cuti
+//pgl function dataterkirim()
 function cutiData(){
 
     var namacuti = document.getElementById("namaCuti").value;
     var lamacuti = document.getElementById("lamaCuti").value;
     var mulaicuti = document.getElementById("mulaiCuti").value;
     var detail = document.getElementById("detail").value;
-    var tglmulai = tgl = yyyy + '-' + mm + '-' + dd;
-    var id_user = ls.user_id;    
+    var tglmulai = tgl = yyyy + '-' + mm + '-' + dd;    
 
     form.set("nama_cuti",namacuti);
     form.set("lama_cuti",lamacuti);
     form.set("mulai_cuti",mulaicuti);
     form.set("alasan",detail);
-    form.set("id_user",id_user);
+    form.set("id_user",user_id);
     form.set("tgl_ajukan",tglmulai);    
 
     return form;
 }
+// end kirim data cuti
 
-
-function sendijin(){
-    var id_user = ls.user_id;    
-    fetch("http://localhost:8000/api/ijin/"+id_user+"",{
+// kirim ijin
+// run dataterkirim()
+//pgl function dataterkirim()
+function sendijin(){    
+    fetch("http://localhost:8000/api/ijin/"+user_id,{
         method : "post",
         body : ijinData(),
     })
     dataterkirim();
 }
+// end kirim ijin
 
-function sendcuti(){
-    var id_user = ls.user_id;    
-    fetch("http://localhost:8000/api/cuti/"+id_user+"",{
+// kirim cuti
+// run dataterkirim()
+//pgl function dataterkirim()
+function sendcuti(){    
+    fetch("http://localhost:8000/api/cuti/"+user_id,{
         method : "post",
         body : cutiData(),
     })
     dataterkirim();
 }
+// end kirim cuti
+
+// selesai tugas
+// run dataterkirim()
+//pgl function dataterkirim()
+function selesaitugas(id_tugas){
+    fetch("http://localhost:8000/api/tugas/selesai/"+id_tugas,{
+        method : "delete",
+    })        
+}
+// end selesai tugas
