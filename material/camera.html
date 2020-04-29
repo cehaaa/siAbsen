@@ -15,11 +15,12 @@
             <div class="col-lg-12 ">
                 <div class="text-center">
                     <video id="player" autoplay class="img-fluid my-4"></video>
-                </div>
+                </div>                
                 <button id="capture-button" style="display: none;" class="btn btn-primary col-lg-12">simpan gambar</button>
             </div>
             <div class="col-lg-12 text-center my-3">
                 <canvas id="output" class="img-fluid"></canvas>              
+                <input type="text" class="form-control mt-3" placeholder="deskripsi" id="deskripsi" style="display:none;">
                 <button class="btn btn-success col-lg-12 my-3" id="save" style="display: none;" onclick="sendabsen('Masuk')">selesai</button>
                 <button class="btn btn-danger col-lg-12" id="cancle" style="display: none;" onclick="changeAbsenPict()">ubah</button>
             </div>
@@ -30,5 +31,6 @@
 
 <script src="./../src/js/main.js"></script>
 <script src="./../src/js/sweetalert.min.js"></script>
+
 
 </html>

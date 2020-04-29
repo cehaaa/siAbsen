@@ -28,6 +28,10 @@
         var form = new FormData();
     //
     
+    // api
+        const api = "http://localhost:8000/api/";
+        // const api = "http://192.168.1.6:8000/api/";
+    //
 // end global variabel
 
 // get page 
@@ -114,7 +118,7 @@ function getPageTugas(page){
 // show tugas
 // user_id get from getPageTugas
 function showTugas(user_id){
-    fetch("http://localhost:8000/api/tugas/"+user_id)
+    fetch(api+"tugas/"+user_id)
     .then(res=>{
         return res.json();
     })
@@ -144,7 +148,7 @@ function showTugas(user_id){
 // show gaji 
 // user_id get from getGajiPage
 function showGaji(user_id){
-    fetch("http://localhost:8000/api/gaji/"+user_id,{
+    fetch(api+"gaji/"+user_id,{
         method : "get"
     })
     .then(res=>{
@@ -174,7 +178,7 @@ function showGaji(user_id){
 // show ijin 
 // user_id get from getPageIjin
 function showIjin(user_id){
-    fetch("http://localhost:8000/api/ijin/"+user_id)
+    fetch(api+"ijin/"+user_id)
     .then(res=>{
         return res.json();
     })
@@ -206,7 +210,7 @@ function showIjin(user_id){
 //show cuti
 // user_id get from function getPageCuti
 function showCuti(user_id){    
-    fetch("http://localhost:8000/api/cuti/"+user_id)
+    fetch(api+"cuti/"+user_id)
     .then(res=>{
         return res.json();
     })
@@ -334,14 +338,17 @@ function camera(){
         captureButton.style.display="none";
         player.style.display="none";
 
+        let r = Math.random().toString(36).substring(7);
+        let  randomName = r+".jpg";
+
         outputCanvas.toBlob((blob)=>{
-            myImage = new File([blob], "absen.jpg", {lastModified: new Date()})
+            myImage = new File([blob], randomName, {lastModified: new Date()})
         });
 
         //show save and cancle button
         document.getElementById('save').style.display = "block";
-        document.getElementById('cancle').style.display = "block";
-
+        document.getElementById('deskripsi').style.display = "block";
+        document.getElementById('cancle').style.display = "block";        
     });
 }
 // end open camera
@@ -355,6 +362,7 @@ function changeAbsenPict(){
 
 //data absen
 function dataabsen(type){
+    var deskripsi = document.getElementById("deskripsi").value;
     var status = "";
     var point;    
     
@@ -376,6 +384,7 @@ function dataabsen(type){
     form.set("type",type);
     form.set("point",point);
     form.set("status",status);
+    form.set("deskripsi",deskripsi);
 
     return form;
 }
@@ -384,7 +393,7 @@ function dataabsen(type){
 //kirim absen
 //pgl function dataterkirim()
 function sendabsen(type){
-    fetch("http://localhost:8000/api/absen/"+user_id,{
+    fetch(api+"absen/"+user_id,{
         method : "post",
         body : dataabsen(type)
     })    
@@ -436,7 +445,7 @@ function cutiData(){
 // run dataterkirim()
 //pgl function dataterkirim()
 function sendijin(){    
-    fetch("http://localhost:8000/api/ijin/"+user_id,{
+    fetch(api+"ijin/"+user_id,{
         method : "post",
         body : ijinData(),
     })
@@ -448,7 +457,7 @@ function sendijin(){
 // run dataterkirim()
 //pgl function dataterkirim()
 function sendcuti(){    
-    fetch("http://localhost:8000/api/cuti/"+user_id,{
+    fetch(api+"cuti/"+user_id,{
         method : "post",
         body : cutiData(),
     })
@@ -460,7 +469,7 @@ function sendcuti(){
 // run dataterkirim()
 //pgl function dataterkirim()
 function selesaitugas(id_tugas){
-    fetch("http://localhost:8000/api/tugas/selesai/"+id_tugas,{
+    fetch(api+"tugas/selesai/"+id_tugas,{
         method : "delete",
     })        
 }
