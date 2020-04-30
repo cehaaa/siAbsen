@@ -62,6 +62,21 @@ function getGajiPage(page){
 }
 // end get gaji page
 
+// get gaji absensi
+// run showAbsensi()
+// params get when function executed
+function getPageAbsensi(page){
+    ajax.open("get",page,true);
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            document.getElementById("main").innerHTML = ajax.responseText;                
+            showAbsensi(user_id);
+        }                
+    }
+    ajax.send();
+}
+//end page Absensi
+
 // get page cuti
 // run showCuti()
 // params get when function executed
@@ -115,6 +130,17 @@ function getPageTugas(page){
 }
 // end get page tugas
 
+function getPageTanggapan(page){
+    ajax.open("get",page,true);
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            document.getElementById("main").innerHTML = ajax.responseText;     
+            showTanggapan(user_id);
+        }                
+    }
+    ajax.send();
+}
+
 // show tugas
 // user_id get from getPageTugas
 function showTugas(user_id){
@@ -144,6 +170,79 @@ function showTugas(user_id){
     })
 }
 // end show tugas
+
+// show absensi
+// user_id get from getAbsensiPage
+function showAbsensi(user_id){
+    fetch(api+"data_absensi/"+user_id,{
+        method : "get"
+    })
+    .then( res => res.json())
+    .then( data =>{
+        data.forEach(item => {
+            document.getElementById("data_absensi").innerHTML +=
+            `
+            <div class="col-lg-12">
+                <div class="card border-primary mb-3">
+                    <div class="card-header text-left"><b>${item.timestamp}</b></div>
+                    <div class="card-body text-primary text-left">
+                        <h5 class="card-title">Deskripsi Anda</h5>
+                        <p class="card-text">${item.deskripsi}.</p>
+                        <button class="btn btn-primary col-12" onclick="showDetailAbsensi('${item.id_user}','${item.status}','${item.type}')">LIHAT DETAIL</button> 
+                    </div>
+                </div>
+            </div>
+            `;
+        });
+    })
+}
+// end show absensi
+
+//show detail absensi
+function showDetailAbsensi(user_id,status,type){        
+    let icon;
+    let title = type;    
+    let text;    
+    if(status == 'Telat'){
+        icon = "error";        
+        text = "Anda Terlamabat !";
+    }else{
+        icon = "success";
+        text = "Anda Tepat Waktu";
+    }
+    Swal.fire({
+        icon : icon,
+        title : "Absen "+title,        
+        text : text,        
+    })
+}
+//end detail absensi
+
+
+function showTanggapan(user_id){
+    fetch(api+"tanggapan/"+user_id,{
+        method : "get"
+    })
+    .then( res => res.json())
+    .then( data =>{
+        data.forEach(item => {
+            document.getElementById("tanggapan").innerHTML += 
+            `
+            <div class="col-lg-12">
+                <div class="card border-primary mb-3">
+                    <div class="card-header text-left">
+                        Absensi pd tgl : <b>${item.tgl_absensi}</b>
+                    </div>
+                    <div class="card-body text-primary text-left">
+                        <p class="card-text">Tanggapan Yang Diberikan Kepada Anda</p>
+                        <h5 class=" card-title">${item.tanggapan}.</h5>                        
+                    </div>
+                </div>
+            </div>
+            `;
+        });
+    })
+}
 
 // show gaji 
 // user_id get from getGajiPage

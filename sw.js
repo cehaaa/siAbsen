@@ -23,10 +23,12 @@ const file = [
     "./src/img/undraw_product_teardown_elol.png",
     "./src/img/undraw_Savings_dwkw.png",
     "./src/img/undraw_updated_rr85.png",
+    "./src/img/undraw_super_thank_you_obwk.png",
+    "./src/img/undraw_my_documents_ym8x.png",
     "./src/img/user.png",
 
     "./pages/main.html",
-    "./pages/akun.html",
+    "./pages/absensi.html",
     "./pages/cekPoint.html",
     "./pages/cekTugas.html",
     "./pages/cekVoucher.html",
@@ -40,6 +42,7 @@ const file = [
     "./pages/slipGaji.html",
     "./pages/useVoucher.html",
     "./pages/login.html",    
+    "./pages/tanggapan.html",    
     
     "./material/camera.html",
     "./material/camera2.html",
