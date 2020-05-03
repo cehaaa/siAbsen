@@ -29,8 +29,8 @@
     //
     
     // api
-        const api = "http://localhost:8000/api/";
-        // const api = "http://192.168.1.6:8000/api/";
+        // const api = "http://localhost:8000/api/";
+        const api = "http://192.168.112.2:8000/api/";
     //
 // end global variabel
 

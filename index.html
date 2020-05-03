@@ -10,21 +10,35 @@
 
     <link rel="stylesheet" href="src/css/bootstrap.css">
 
-    <title>latihan PWA</title>
+    <title>siAbsen</title>
 </head>
-<body>
+<body class="bg-image">
     
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1>Selamat datang</h1>
-                <a href="pages/login.html">
-                    <button class="btn btn-primary">register</button>
-                </a>
-
-                <a href="pages/login.html">
-                    <button class="btn btn-primary">login</button>
-                </a>
+            <div class="col-lg-12">
+                <img src="./src/img/undraw_super_thank_you_obwk.png" alt="" class="img-fluid mt-5">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="display-3 text-center my-3">siAbsen</div>
+                <div class="card-text text-center">Akan menjadi sangat menyenangkan bila anda mulai menggunakan aplikasi kami</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-primary col-12 mt-5 text-center" href="./pages/login.html">Login Sekarang !</a>
+                <div class="text-center mt-3">
+                    <a class="text-decoration-none col-12" href="./pages/register.html">Belum punya akun ? Registrasi disini</a>
+                </div>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mt-5 text-center text-danger">
+                    copyright by siabsen
+                </div>
             </div>
         </div>
     </div>
@@ -32,15 +46,27 @@
 </body>
 <script>
     
-    if("serviceWorker" in navigator){
-        navigator.serviceWorker.register('sw.js')
-        .then(function(register){
-            console.log("success");
-        })
-        .catch(function(error){
-            console.log("error");
-        })
-    }   
+    // if("serviceWorker" in navigator){
+    //     navigator.serviceWorker.register('sw.js')
+    //     .then(function(register){
+    //         console.log("success");
+    //     })
+    //     .catch(function(error){
+    //         console.log("error");
+    //     })
+    // }   
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}
 
 </script>
 

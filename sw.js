@@ -26,6 +26,9 @@ const file = [
     "./src/img/undraw_super_thank_you_obwk.png",
     "./src/img/undraw_my_documents_ym8x.png",
     "./src/img/user.png",
+    "./src/img/53916.jpg",
+    "./src/img/2787856.jpg",
+    "./src/img/2473674.jpg",
 
     "./pages/main.html",
     "./pages/absensi.html",
@@ -67,15 +70,73 @@ const file = [
 
 const cacheStaticName = "siabsen-mainapp";
 
-self.addEventListener('install',function(event){
-    console.log("service worker intalled")
+
+self.addEventListener('install', function(event) {
+    // Perform install steps
     event.waitUntil(
         caches.open(cacheStaticName)
-        .then(function(cache){
+        .then(function(cache) {
+            console.log('Opened cache');
             return cache.addAll(file);
-        })        
+        })
     );
-})
+});
+
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        caches.match(event.request)
+        .then(function(response) {          
+            if (response) {
+                return response;
+            }          
+            var fetchRequest = event.request.clone();
+    
+            return fetch(fetchRequest).then(
+                function(response) {                
+                if(!response || response.status !== 200 || response.type !== 'basic') {
+                    return response;
+                }
+
+                var responseToCache = response.clone();
+
+                caches.open(cacheStaticName)
+                    .then(function(cache) {
+                        cache.put(event.request, responseToCache);
+                    });
+                return response;
+                }
+            );
+        })
+    );
+});
+
+self.addEventListener('activate', function(event) {
+
+    var cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
+
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+
+// self.addEventListener('install',function(event){
+//     console.log("service worker intalled")
+//     event.waitUntil(
+//         caches.open(cacheStaticName)
+//         .then(function(cache){
+//             return cache.addAll(file);
+//         })        
+//     );
+// })
 
 // self.addEventListener('fetch', function(event) {
 //     console.log("fetch url : " , event.request.url)
@@ -107,20 +168,20 @@ self.addEventListener('install',function(event){
 //     )
 // });
 
-self.addEventListener('activate',function(event){
-    const allChace = [cacheStaticName]
-    event.waitUntil(
-        caches.keys()
-        .then(function(cachesNames){
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheWhiteList.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            )
-        })
-    )
-})
+// self.addEventListener('activate',function(event){
+//     const allChace = [cacheStaticName]
+//     event.waitUntil(
+//         caches.keys()
+//         .then(function(cachesNames){
+//             return Promise.all(
+//                 cacheNames.map(cacheName => {
+//                     if (cacheWhiteList.indexOf(cacheName) === -1) {
+//                         return caches.delete(cacheName);
+//                     }
+//                 })
+//             )
+//         })
+//     )
+// })
 
 

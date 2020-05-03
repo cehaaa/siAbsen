@@ -38,38 +38,42 @@
 
 <hr class="mt-4"></hr>
 
-<section class="row mt-5" data-aos="fade-in">
-    <div class="col-lg-12 display-inline-block text-right">                        
-        <img src=./../src/img/undraw_learning_2q1h.png class="img ">
-        <div class="text-right">
-            <h5>
-                <b>Tugas Ku</b>                                
-            </h5>
-            <p class="text-muted font-size-small mt-2">Kethauilah tugas mu hari ini</p>
-            <button class="costum-primary-button btn mt-2" onclick="getPageTugas('cekTugas.html')">
-                CEK DETAIL
-            </button>                                            
-        </div>
+<section class="row">
+    <div class="col-lg-12">                        
+        <h5 class="text-left mb-4">Konten buat kamu</h5>        
+        <div class="card text-left mb-3" onclick="getPageTugas('cekTugas.html')">
+            <img src="./../src/img/2787856.jpg" class="card-img-top">                            
+            <div class="card-body text-left">
+                <h5 class="card-title">Cek tugas mu hari ini</h5>                                
+                <p class="card-text">
+                    Tugas lagi tugas lagi huftt .... <br>
+                    ayo semangat kerjakan tugas mu , dan dapatkan apresiasi dari boss !
+                </p>
+            </div>
+        </div>            
     </div>                    
+    <div class="col-lg-12">                                
+        <div class="card text-left mb-3" onclick="getPageAbsensi('../pages/absensi.html')">
+            <img src="./../src/img/2473674.jpg" class="card-img-top">                            
+            <div class="card-body text-left">
+                <h5 class="card-title">Cek absensi mu</h5>                    
+                <p class=" card-text">
+                    Klik disini untuk lihat riwayat absensi mu semua disini
+                    lihat juga tanggapan yang diberikan boss mu !
+                </p>            
+            </div>
+        </div>            
+    </div>                    
+    <div class="col-lg-12" style="margin-bottom: 100px;">                                        
+        <div class="card text-left"  onclick="getPageIjin('../pages/info.html')">
+            <img src="./../src/img/53916.jpg" class="card-img-top"></img>
+            <div class="card-body text-left">                    
+                <h5 class=" card-title">Lihat data ijin dan cuti mu !</h5>                                
+                <p class="card-text">
+                    Klik disini untuk melihat riwayat serta
+                    data-data ijin & cuti mu
+                </p>
+            </div>
+        </div>
+    </div>        
 </section>
-
-<hr class="mt-4"></hr>
-
-<section class="row mb-5">
-    <div class="col-lg-12 display-inline-block text-left">                                
-        <div class="mr-4">
-            <h5>
-                <b>Point Kamu</b>
-            </h5>
-            <span class="font-size-large text-muted mr-1">500</span> 
-            <span class="text-muted">pt</span>            
-            <button class="btn costum-primary-button border-rounded mt-2" onclick="getPage('cekPoint.html')">CEK POINT</button>            
-        </div>
-        <img src="./../src/img/undraw_product_teardown_elol.png" class="img"></img>
-    </div>                    
-</section>   
-
-<script>
-    AOS.init();
-</script>
-
