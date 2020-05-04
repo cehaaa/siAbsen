@@ -29,8 +29,8 @@
     //
     
     // api
-        // const api = "http://localhost:8000/api/";
-        const api = "http://192.168.112.2:8000/api/";
+        const api = "http://localhost:8000/api/";
+        // const api = "http://192.168.112.2:8000/api/";
     //
 // end global variabel
 
@@ -149,27 +149,86 @@ function showTugas(user_id){
         return res.json();
     })
     .then(data=>{        
-        data.forEach(item => {
-            document.getElementById("tugas").innerHTML +=
-            `
-            <div class="row my-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.judul}</h5>  
-                        <p class="card-text">${item.detail}</p>
-                        <div class="text-danger">tgl diberikan tugas : ${item.tgl_diberikan_tugas}</div>
-                        <div class="text-danger">deadline : ${item.deadline}</div>                                                                        
-                        <div class="mt-3">
-                            <button class="col-lg-12 btn btn-primary" onclick="selesaitugas('${item.id}')">Selesai</button>
-                        </div>
-                    </div>                    
-                </div>                                     
-            </div>            
-            `;            
+        data.forEach(item => {        
+            document.getElementById("tugas").innerHTML += "";
+            if(item.status == "SELESAI"){                
+                document.getElementById("tugas").innerHTML +=
+                `
+                <div class="row my-3">
+                    <div class="card">
+                        <div class="card-body" onclick="selesai()">
+                            <h5 class="card-title">${item.judul}</h5>  
+                            <p class="card-text">${item.detail}</p>
+                            <div class="text-danger">tgl diberikan tugas : ${item.tgl_diberikan_tugas}</div>
+                            <div class="text-danger">deadline : ${item.deadline}</div>                                                                                                    
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" disabled="disabled">Kerjakan Tugas</button>
+                            </div>
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" disabled="disabled">Selesai</button>
+                            </div>
+                        </div>                    
+                        <div class="card-footer bg-transparent ">${item.status}</div>
+                    </div>                                     
+                </div>            
+                `;
+            }else if(item.status == null){
+                var confirm = "MENUNGGU KONFIRMASI";
+                document.getElementById("tugas").innerHTML +=
+                `
+                <div class="row my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.judul}</h5>  
+                            <p class="card-text">${item.detail}</p>
+                            <div class="text-danger">tgl diberikan tugas : ${item.tgl_diberikan_tugas}</div>
+                            <div class="text-danger">deadline : ${item.deadline}</div>                                                                                                    
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" onclick="kerjakantugas('${item.id}')">Kerjakan Tugas</button>
+                            </div>
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" onclick="selesaitugas('${item.id}')">Selesai</button>
+                            </div>
+                        </div>    
+                        <div class="card-footer bg-transparent ">${confirm}</div>                
+                    </div>                                     
+                </div>            
+                `;
+            }else if(item.status == "SEDANG MENGERJAKAN"){                
+                document.getElementById("tugas").innerHTML +=
+                `
+                <div class="row my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.judul}</h5>  
+                            <p class="card-text">${item.detail}</p>
+                            <div class="text-danger">tgl diberikan tugas : ${item.tgl_diberikan_tugas}</div>
+                            <div class="text-danger">deadline : ${item.deadline}</div>                                                                                                    
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" disabled="disabled">Kerjakan Tugas</button>
+                            </div>
+                            <div class="mt-3">
+                                <button class="col-lg-12 btn btn-primary" id="button-tugas" onclick="selesaitugas('${item.id}')">Selesai</button>
+                            </div>
+                        </div>                    
+                        <div class="card-footer bg-transparent">${item.status}</div>
+                    </div>                                     
+                </div>            
+                `;
+            }
         });
     })
 }
 // end show tugas
+
+
+function selesai(){
+    Swal.fire({
+        icon: "success",
+        title : "Selesai",        
+        text : "Tugas anda sudah selesai !",        
+    })
+}
 
 // show absensi
 // user_id get from getAbsensiPage
@@ -283,10 +342,10 @@ function showIjin(user_id){
     })
     .then(data=>{
         var username = ls.username;
-        data.forEach(item => {                        
+        data.forEach(item => {                                    
             document.getElementById("switch").innerHTML +=        
             `
-            <div class="costum-border rounded mt-3">
+            <div class="costum-border rounded mt-3" onclick="detailIjinCuti('${item.status}')">
                 <div class="row">
                     <div class="col-2 mt-2">
                         <img src="./../src/img/man.png" class="img-fluid icon-small" id="profileImage"></img>
@@ -306,6 +365,27 @@ function showIjin(user_id){
 }
 // end show ijin 
 
+// detail ijin
+    function detailIjinCuti(status){
+        if(status == "SETUJU"){
+            Swal.fire({
+                icon : "success",
+                title : "ijin anda disetujui"
+            });
+        }else if (status == "TOLAK"){
+            Swal.fire({
+                icon : "error",
+                title : "ijin anda tidak disetujui"
+            });
+        }else{
+            Swal.fire({
+                icon : "info",
+                title : "menuggu infomasi"
+            })
+        }
+    }
+//end detail ijin
+
 //show cuti
 // user_id get from function getPageCuti
 function showCuti(user_id){    
@@ -319,7 +399,7 @@ function showCuti(user_id){
         data.forEach(item => {
             document.getElementById("cuti").innerHTML +=
             `
-            <div class="costum-border rounded mt-3 col-lg-12">
+            <div class="costum-border rounded mt-3 col-lg-12" onclick="detailIjinCuti('${item.status}')">
                 <div class="row">
                     <div class="col-2 mt-2">
                         <img src="./../src/img/man.png" class="img-fluid icon-small"></img>
@@ -567,9 +647,23 @@ function sendcuti(){
 // selesai tugas
 // run dataterkirim()
 //pgl function dataterkirim()
-function selesaitugas(id_tugas){
-    fetch(api+"tugas/selesai/"+id_tugas,{
-        method : "delete",
-    })        
+function selesaitugas(user_id){
+    fetch(api+"tugas/selesai/"+user_id,{
+        method : "post",
+    })
+    Swal.fire({
+        icon : "success",
+        title : "Anda sudah menyelesaikan tugas anda"
+    })
 }
 // end selesai tugas
+
+function kerjakantugas(user_id){
+    fetch(api+"tugas/kerja/"+user_id,{
+        method : "post",
+    })
+    Swal.fire({
+        icon : "warning",
+        title : "Anda sedang mengerjakan tugas anda"
+    })
+}
