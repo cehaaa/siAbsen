@@ -265,7 +265,11 @@ function showDetailAbsensi(user_id,status,type){
     if(status == 'Telat'){
         icon = "error";        
         text = "Anda Terlamabat !";
-    }else{
+    }else if(type == "Keluar"){
+        icon = "success";
+        text = "Anda melakukan absen keluar";
+    }
+    else{
         icon = "success";
         text = "Anda Tepat Waktu";
     }
@@ -345,18 +349,17 @@ function showIjin(user_id){
         data.forEach(item => {                                    
             document.getElementById("switch").innerHTML +=        
             `
-            <div class="costum-border rounded mt-3" onclick="detailIjinCuti('${item.status}')">
-                <div class="row">
-                    <div class="col-2 mt-2">
-                        <img src="./../src/img/man.png" class="img-fluid icon-small" id="profileImage"></img>
-                    </div>
-                    <div class="col-4 mt-2">
-                        <b>${username}</b>
-                        <div class="text-muted">${item.alasan_ijin}</div>
+            <div class="costum-border rounded mt-3">
+                <div class="row text-left" onclick="detailIjinCuti('${item.status}')">                    
+                    <div class="col-6 mt-2">
+                        <b>${username}</b>                        
                     </div>
                     <div class="col-6 mt-2 text-muted">
                         ${item.tgl_mulai}
-                    </div>
+                    </div>           
+                    <div class="col-12 mt-2 text-muted">
+                        <div>${item.alasan_ijin}</div>
+                    </div>                             
                 </div>
             </div>        
             `;
@@ -380,7 +383,7 @@ function showIjin(user_id){
         }else{
             Swal.fire({
                 icon : "info",
-                title : "menuggu infomasi"
+                title : "menuggu konfirmasi"
             })
         }
     }
@@ -400,11 +403,8 @@ function showCuti(user_id){
             document.getElementById("cuti").innerHTML +=
             `
             <div class="costum-border rounded mt-3 col-lg-12" onclick="detailIjinCuti('${item.status}')">
-                <div class="row">
-                    <div class="col-2 mt-2">
-                        <img src="./../src/img/man.png" class="img-fluid icon-small"></img>
-                    </div>
-                    <div class="col-4 mt-2">
+                <div class="row text-left">                    
+                    <div class="col-6 mt-2">
                         <b>${username}</b>                            
                         <div class="text-muted">Cuti ${item.lama_cuti} hari</div>
                     </div>
@@ -547,9 +547,9 @@ function dataabsen(type){
     
     var type = type;
     var timestamp = yyyy+"-"+mm+"-"+dd+" "+ h+":"+m+":"+s ;    
-    var today = todaydate+" "+ "07"+":"+"00"+":"+"00" ;
+    var jamkerja = todaydate+" "+ "12"+":"+"00"+":"+"00" ;
 
-    if(timestamp == today ){
+    if(timestamp <= jamkerja ){
         status = "Tepat Waktu";
         point = 10;
     }else{
