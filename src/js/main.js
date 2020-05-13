@@ -264,7 +264,7 @@ function showDetailAbsensi(user_id,status,type){
     let text;    
     if(status == 'Telat'){
         icon = "error";        
-        text = "Anda Terlamabat !";
+        text = "Anda Terlambat !";
     }else if(type == "Keluar"){
         icon = "success";
         text = "Anda melakukan absen keluar";
@@ -373,17 +373,17 @@ function showIjin(user_id){
         if(status == "SETUJU"){
             Swal.fire({
                 icon : "success",
-                title : "ijin anda disetujui"
+                title : "Ijin anda disetujui"
             });
         }else if (status == "TOLAK"){
             Swal.fire({
                 icon : "error",
-                title : "ijin anda tidak disetujui"
+                title : "Ijin anda tidak disetujui"
             });
         }else{
             Swal.fire({
                 icon : "info",
-                title : "menuggu konfirmasi"
+                title : "Menunggu Konfirmasi"
             })
         }
     }
@@ -441,7 +441,7 @@ function reedem(){
 function dataterkirim(){
     Swal.fire({
         icon : "success",        
-        title : "Data terkrim"
+        title : "Data terkirim"
     })
     .then(()=>{
         window.location.href = "./../../pages/main.html";
