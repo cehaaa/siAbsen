@@ -2,7 +2,11 @@
 
     // user id , important
         var ls = JSON.parse(localStorage.getItem("userdata"));
-        var user_id = ls.user_id;
+        // var user_id = ls.user_id;
+        console.log(user_id)
+
+        var user_id = JSON.parse(localStorage.getItem("userdata"));
+
     // 
 
     // image , important
@@ -30,7 +34,7 @@
     
     // api
         const api = "http://localhost:8000/api/";
-        // const api = "http://192.168.112.2:8000/api/";
+        // const api = "http://192.168.112.6:8001/api/";
     //
 // end global variabel
 
